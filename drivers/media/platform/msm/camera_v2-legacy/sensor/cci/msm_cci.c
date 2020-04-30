@@ -1,5 +1,4 @@
 /* Copyright (c) 2012-2017, The Linux Foundation. All rights reserved.
- * Copyright (C) 2019 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -843,7 +842,7 @@ static int32_t msm_cci_i2c_read(struct v4l2_subdev *sd,
 	if (rc < 0) {
 		pr_err("%s:%d msm_cci_set_clk_param failed rc = %d\n",
 			__func__, __LINE__, rc);
-		goto ERROR;
+		return rc;
 	}
 
 	/*
@@ -1422,15 +1421,10 @@ static int32_t msm_cci_init(struct v4l2_subdev *sd,
 	}
 
 	/* Re-initialize the completion */
-	reinit_completion(&cci_dev->cci_master_info[MASTER_0].reset_complete);
+	reinit_completion(&cci_dev->cci_master_info[master].reset_complete);
 	for (i = 0; i < NUM_QUEUES; i++)
-		reinit_completion(&cci_dev->cci_master_info[MASTER_0].
+		reinit_completion(&cci_dev->cci_master_info[master].
 			report_q[i]);
-    reinit_completion(&cci_dev->cci_master_info[MASTER_1].reset_complete);
-	for (i = 0; i < NUM_QUEUES; i++)
-		reinit_completion(&cci_dev->cci_master_info[MASTER_1].
-			report_q[i]);
-
 	rc = msm_camera_enable_irq(cci_dev->irq, true);
 	if (rc < 0)
 		pr_err("%s: irq enable failed\n", __func__);

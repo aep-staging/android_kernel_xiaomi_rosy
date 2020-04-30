@@ -2123,7 +2123,7 @@ void msm_isp_do_tasklet(unsigned long data)
 
 	while (atomic_read(&vfe_dev->irq_cnt)) {
 		spin_lock_irqsave(&vfe_dev->tasklet_lock, flags);
-		queue_cmd = list_first_entry_or_null(&vfe_dev->tasklet_q,
+		queue_cmd = list_first_entry(&vfe_dev->tasklet_q,
 		struct msm_vfe_tasklet_queue_cmd, list);
 		if (!queue_cmd) {
 			atomic_set(&vfe_dev->irq_cnt, 0);
@@ -2319,7 +2319,7 @@ int msm_isp_open_node(struct v4l2_subdev *sd, struct v4l2_subdev_fh *fh)
 #ifdef CONFIG_MSM_AVTIMER
 void msm_isp_end_avtimer(void)
 {
-	msm_isp_stop_avtimer();
+	avcs_core_disable_power_collapse(0);
 }
 #else
 void msm_isp_end_avtimer(void)
