@@ -80,6 +80,9 @@ static int msm8952_mclk_event(struct snd_soc_dapm_widget *w,
 extern unsigned char AW87319_Audio_Speaker(void);
 extern unsigned char AW87319_Audio_OFF(void);
 
+extern unsigned char AW87319_Audio_Speaker(void);
+extern unsigned char AW87319_Audio_OFF(void);
+
 /*
  * Android L spec
  * Need to report LINEIN
