@@ -269,13 +269,13 @@
 	qcom,fastchg-current-customize-cool = <300>;
 	qcom,fastchg-current-bat-cool = <900>;
 	qcom,fastchg-current-ma = <2000>;
-	dpdm-supply = <&qusb_phy>;
+	qcom,override-usb-current;
 };
 
 &qpnp_fg {
 	qcom,battery-data = <&qrd_batterydata>;
-	qcom,cold-bat-decidegc = <(0)>;
-	qcom,cool-bat-decidegc = <(150)>;
+	qcom,cold-bat-decidegc = <0>;
+	qcom,cool-bat-decidegc = <150>;
 	qcom,hot-bat-decidegc = <550>;
 	qcom,warm-bat-decidegc = <450>;
 	qcom,warm-bat-india-decidegc = <500>;
@@ -301,32 +301,4 @@
 
 &pm8953_typec {
 	status = "disabled";
-};
-
-&wsa881x_i2c_f {
-        status = "disabled";
-};
-
-&wsa881x_i2c_45 {
-        status = "disabled";
-};
-
-&wsa881x_analog_vi_gpio {
-        status = "disabled";
-};
-
-&wsa881x_analog_clk_gpio {
-        status = "disabled";
-};
-
-&wsa881x_analog_reset_gpio {
-        status = "disabled";
-};
-
-&msm_digital_codec {
-	status = "okay";
-};
-
-&pmic_analog_codec {
-	status = "okay";
 };
