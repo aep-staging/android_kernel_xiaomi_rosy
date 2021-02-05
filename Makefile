@@ -423,6 +423,9 @@ GCC_PLUGINS_CFLAGS :=
 LDFLAGS :=
 CLANG_FLAGS :=
 
+# Redmi 5 specific optimization flags
+KBUILD_CFLAGS += -march=armv8-a+crc+crypto -mtune=cortex-a53 -mcpu=cortex-a53+crc+crypto
+
 # Read KERNELRELEASE from include/config/kernel.release (if it exists)
 KERNELRELEASE = $(shell cat include/config/kernel.release 2> /dev/null)
 KERNELVERSION = $(VERSION)$(if $(PATCHLEVEL),.$(PATCHLEVEL)$(if $(SUBLEVEL),.$(SUBLEVEL)))$(EXTRAVERSION)
