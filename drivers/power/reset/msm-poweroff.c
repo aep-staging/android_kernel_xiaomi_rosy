@@ -61,17 +61,6 @@ static void scm_disable_sdi(void);
 static bool force_warm_reboot;
 static int in_panic;
 
-static int panic_prep_restart(struct notifier_block *this,
-			      unsigned long event, void *ptr)
-{
-	in_panic = 1;
-	return NOTIFY_DONE;
-}
-
-static struct notifier_block panic_blk = {
-	.notifier_call	= panic_prep_restart,
-};
-
 #if defined(WT_FINAL_RELEASE)
 static int download_mode;
 #elif defined(CONFIG_QCOM_DLOAD_MODE)
