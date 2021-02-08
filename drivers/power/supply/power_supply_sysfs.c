@@ -314,7 +314,6 @@ static struct device_attribute power_supply_attrs[] = {
 	POWER_SUPPLY_ATTR(hw_current_max),
 	POWER_SUPPLY_ATTR(real_type),
 	POWER_SUPPLY_ATTR(charging_call_state),
-	POWER_SUPPLY_ATTR(batfet_reset_enable),
 	POWER_SUPPLY_ATTR(pr_swap),
 	POWER_SUPPLY_ATTR(cc_step),
 	POWER_SUPPLY_ATTR(cc_step_sel),
