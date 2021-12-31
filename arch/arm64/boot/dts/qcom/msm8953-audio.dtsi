@@ -76,9 +76,9 @@
 				"ADC3_IN", "ADC3_OUT",
 				"PDM_IN_RX1", "PDM_OUT_RX1",
 				"PDM_IN_RX2", "PDM_OUT_RX2",
-				"PDM_IN_RX3", "PDM_OUT_RX3",
-				"WSA_SPK OUT", "VDD_WSA_SWITCH",
-				"SpkrMono WSA_IN", "WSA_SPK OUT";
+				"PDM_IN_RX3", "PDM_OUT_RX3";
+				/* "WSA_SPK OUT", "VDD_WSA_SWITCH",  */
+				/* "SpkrMono WSA_IN", "WSA_SPK OUT"; */
 
 		qcom,cdc-us-eu-gpios = <&cdc_us_euro_sw>;
 		qcom,cdc-comp-gpios = <&cdc_comp_gpios>;
