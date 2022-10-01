@@ -1,5 +1,4 @@
-/* Copyright (c) 2017-2018,2020, The Linux Foundation. All rights reserved.
- * Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
+/* Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -766,7 +765,9 @@ int a6xx_preemption_init(struct adreno_device *adreno_dev)
 		(unsigned long) adreno_dev);
 
 	/* Allocate mem for storing preemption counters */
-	ret = kgsl_allocate_global(device, &preempt->counters, PAGE_SIZE, 0, 0,
+	ret = kgsl_allocate_global(device, &preempt->counters,
+		adreno_dev->num_ringbuffers *
+		A6XX_CP_CTXRECORD_PREEMPTION_COUNTER_SIZE, 0, 0,
 		"preemption_counters");
 	if (ret)
 		goto err;
