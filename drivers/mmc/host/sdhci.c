@@ -1952,13 +1952,27 @@ void sdhci_set_uhs_signaling(struct sdhci_host *host, unsigned timing)
 }
 EXPORT_SYMBOL_GPL(sdhci_set_uhs_signaling);
 
+void sdhci_cfg_irq(struct sdhci_host *host, bool enable, bool sync)
+{
+	if (enable && !(host->flags & SDHCI_HOST_IRQ_STATUS)) {
+		enable_irq(host->irq);
+		host->flags |= SDHCI_HOST_IRQ_STATUS;
+	} else if (!enable && (host->flags & SDHCI_HOST_IRQ_STATUS)) {
+		if (sync)
+			disable_irq(host->irq);
+		else
+			disable_irq_nosync(host->irq);
+		host->flags &= ~SDHCI_HOST_IRQ_STATUS;
+	}
+}
+EXPORT_SYMBOL(sdhci_cfg_irq);
+
 static void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
 {
 	struct sdhci_host *host = mmc_priv(mmc);
 	unsigned long flags;
 	u8 ctrl;
-
-	spin_lock_irqsave(&host->lock, flags);
+	int ret;
 
 	if (host->flags & SDHCI_DEVICE_DEAD) {
 		if (!IS_ERR(mmc->supply.vmmc) &&
@@ -1977,7 +1991,9 @@ static void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
 			mmc_card_sdio(host->mmc->card))
 		sdhci_cfg_irq(host, false, false);
 
-	if (!ios->clock || ios->clock != host->clock) {
+	if (ios->clock &&
+	    ((ios->clock != host->clock) || (ios->timing != host->timing))) {
+		spin_unlock_irqrestore(&host->lock, flags);
 		host->ops->set_clock(host, ios->clock);
 		spin_lock_irqsave(&host->lock, flags);
 		host->clock = ios->clock;
@@ -2142,6 +2158,7 @@ static void sdhci_set_ios(struct mmc_host *mmc, struct mmc_ios *ios)
 	} else
 		sdhci_writeb(host, ctrl, SDHCI_HOST_CONTROL);
 
+	spin_unlock_irqrestore(&host->lock, flags);
 	/*
 	 * Some (ENE) controllers go apeshit on some ios operation,
 	 * signalling timeout and CRC errors even on CMD0. Resetting
