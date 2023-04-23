@@ -125,6 +125,10 @@ kernel/configs/android-*.cfg
 Android.bp
 
 #
+<<<<<<< HEAD
 # Ignoring out directory
+=======
+# Ignore output folder
+>>>>>>> android_kernel_xiaomi_rosy/13.0
 #
 out/
